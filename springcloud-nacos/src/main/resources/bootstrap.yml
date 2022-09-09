@@ -18,46 +18,46 @@ spring:
       username: nacos
       password: 123456
       config: # 从下面的配置中获取需要的配置内容
-        prefix: test01 # 不配置该属性时，配置列表的 data-id：app-nacos-dev.yaml，配置了后，为 test01-dev.yaml
+        prefix: test01 # 不配置该属性时，配置列表的 data-id：app-nacos-dev.yaml，配置了后，为 test01-dev.yaml，即（项目名或前缀名） + '-' +（环境名）.yaml
         server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868 # Nacos 作为配置中心地址
         file-extension: yaml # 指定yaml格式的配置
         namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82 # 该属性主要用于区分环境。指定命名空间id，默认在命名空间public下
         group: g_nacos_01 # 区分不同应⽤。同⼀个环境内，不同应⽤的配置，通过group来区分。
         refresh-enabled: true # 是否禁止自动刷新，默认true
 
-#        extension-configs: # 扩展配置，优先级大于 shared-configs，在 shared-configs 之后加载。这里的 3 表示优先级，越大则优先级越高，则越迟加载
-#          - data-id: nacos1.yaml # 使用的是 30e9cb88-4054-4714-8dbc-d71c8e960e82 命名空间下的 nacos1.yaml g_1
-#            group: g_1 # 不明确配置的话，默认是 DEFAULT_GROUP
-#            refresh: true # 默认为false
-#          - data-id: nacos2.yaml # 使用的是 30e9cb88-4054-4714-8dbc-d71c8e960e82 命名空间下的 nacos2.yaml g_2
-#            group: g_2
-#            refresh: true
-
-        extension-configs[1]: # 这里的 1 表示优先级，越大则优先级越高，则越迟加载。必须按顺序排
-          data-id: nacos1.yaml
-          group: g_1
-          refresh: true
-        extension-configs[0]:
-          data-id: nacos2.yaml
+        extension-configs: # 扩展配置，优先级大于 shared-configs，在 shared-configs 之后加载。这里的 3 表示优先级，越大则优先级越高，则越迟加载
+        - data-id: nacos1.yaml # 使用的是 30e9cb88-4054-4714-8dbc-d71c8e960e82 命名空间下的 nacos1.yaml g_1
+          group: g_1 # 不明确配置的话，默认是 DEFAULT_GROUP
+          refresh: true # 默认为false
+        - data-id: nacos2.yaml # 使用的是 30e9cb88-4054-4714-8dbc-d71c8e960e82 命名空间下的 nacos2.yaml g_2
           group: g_2
           refresh: true
 
-#        shared-configs: # 用于共享的配置文件
-#          - data-id: shared01.yaml
-#            group: h_1
-#            refresh: true # 默认为false
-#          - data-id: shared02.yaml
-#            group: h_2
-#            refresh: true
+#        extension-configs[1]: # 这里的 1 表示优先级，越大则优先级越高，则越迟加载。必须按顺序排
+#          data-id: nacos1.yaml
+#          group: g_1
+#          refresh: true
+#        extension-configs[0]:
+#          data-id: nacos2.yaml
+#          group: g_2
+#          refresh: true
 
-        shared-configs[1]:
-            data-id: shared01.yaml
-            group: h_1
-            refresh: true
-        shared-configs[0]:
-            data-id: shared02.yaml
-            group: h_2
-            refresh: true
+        shared-configs: # 用于共享的配置文件
+        - data-id: shared01.yaml
+          group: h_1
+          refresh: true # 默认为false
+        - data-id: shared02.yaml
+          group: h_2
+          refresh: true
+
+#        shared-configs[1]:
+#          data-id: shared01.yaml
+#          group: h_1
+#          refresh: true
+#        shared-configs[0]:
+#          data-id: shared02.yaml
+#          group: h_2
+#          refresh: true
 
       discovery: # 把本项目注册到下面的配置下
         server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868 # Nacos 服务注册中心地址
