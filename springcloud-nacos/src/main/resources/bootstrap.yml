@@ -1,0 +1,26 @@
+# bootstrap.yml 比 application.yml 有较高的优先级，也就是说它的配置不会被覆盖，我们可以把固定的配置写到这里
+# bootstrap.yml 可以理解成系统级别的一些参数配置，这些参数一般是不会变动的。
+# application.yml 可以用来定义应用级别的。
+# bootstrap.yml（bootstrap.properties）先加载，application.yml（application.properties）后加载
+# bootstrap.yml 用于应用程序上下文的引导阶段，bootstrap.yml 由父Spring ApplicationContext加载。父ApplicationContext 被加载到使用 application.yml 的之前。
+# 参考：https://blog.csdn.net/hejunfei/article/details/123082936
+
+spring:
+  profiles:
+    active: dev # 不能写 @profile.active@，也不能把 dev 写在 application.yml，否则 nacos 会获取不到
+  application:
+    name: app-nacos
+  cloud:
+    # nacos
+    nacos:
+      config: # 从下面的配置中获取需要的配置内容
+        prefix: test01 # 不配置该属性时，配置列表的 data-id：app-nacos-dev.yaml，配置了后，为 test01-dev.yaml
+        server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868 # Nacos 作为配置中心地址
+        file-extension: yaml # 指定yaml格式的配置
+        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+        group: g_nacos_01
+      discovery: # 把服务放到下面的配置下
+        server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868 # Nacos 服务注册中心地址
+        # 指定命名空间id，默认在命名空间public下
+        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+        group: g_nacos_01

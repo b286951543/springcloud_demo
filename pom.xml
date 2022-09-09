@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>pom</packaging>
+	<groupId>com.example</groupId>
+	<artifactId>springcloud_demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>springcloud_demo</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.12.RELEASE</version>
+		<!-- 指定查找该项目 spring-boot-starter-parent 的 pom.xml 文件的(相对)路径。默认顺序：relativePath > 本地仓库 > 远程仓库
+		没有relativePath标签等同 <relativePath>../pom.xml</relativePath>
+		<relativePath/> 意思是设定一个空值，表示将始终从仓库中获取，不从本地路径获取
+		-->
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
+		<spring.boot.version>2.3.12.RELEASE</spring.boot.version>
+		<spring.cloud.version>Hoxton.SR12</spring.cloud.version>
+		<spring.cloud.alibaba.version>2.2.7.RELEASE</spring.cloud.alibaba.version> <!-- 搭配 nacos 2.0.3 -->
+	</properties>
+
+	<modules>
+		<module>springcloud-nacos</module>
+	</modules>
+
+	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
+	<!-- 如果有多个子项目都引用同一样依赖，则可以避免在每个使用的子项目里都声明一个版本号。当想升级或切换到另一个版本时，只需要在顶层父容器里更新，而不需要逐个修改子项目；另外如果某个子项目需要另外的一个版本，只需要声明version即可 -->
+	<!-- dependencyManagement中定义的只是依赖的声明，并不实现引入，因此子项目需要显式的声明需要用的依赖。 -->
+	<dependencyManagement>
+		<dependencies>
+<!--			<dependency>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-starter-parent</artifactId>-->
+<!--				<version>${spring.boot.version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope> &lt;!&ndash; import: 只能在dependencyManagement中使用，相当于从其他pom文件中导入依赖设置 &ndash;&gt;-->
+<!--			</dependency>-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring.cloud.alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+			<version>${spring.cloud.alibaba.version}</version>
+		</dependency>
+		<!-- spring cloud -->
+		<!-- 注意版本要匹配：
+	 	Spring Cloud Alibaba Version	Spring Cloud Version		Spring Boot Version
+		2.2.8.RELEASE 					Spring Cloud Hoxton.SR12	2.3.12.RELEASE
+		2.2.7.RELEASE					Spring Cloud Hoxton.SR12	2.3.12.RELEASE
+		2.2.6.RELEASE					Spring Cloud Hoxton.SR9		2.3.2.RELEASE
+		2.1.4.RELEASE					Spring Cloud Greenwich.SR6	2.1.13.RELEASE
+		2.2.1.RELEASE					Spring Cloud Hoxton.SR3		2.2.5.RELEASE
+		2.2.0.RELEASE					Spring Cloud Hoxton.RELEASE	2.2.X.RELEASE
+		2.1.2.RELEASE					Spring Cloud Greenwich		2.1.X.RELEASE
+		2.0.4.RELEASE(停止维护，建议升级)	Spring Cloud Finchley		2.0.X.RELEASE
+		1.5.1.RELEASE(停止维护，建议升级)	Spring Cloud Edgware		1.5.X.RELEASE
+
+		参考连接：
+		https://blog.csdn.net/m0_67392931/article/details/123708242
+		https://start.spring.io/actuator/info
+		https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
+		 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+
+		<!-- lombook -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>
