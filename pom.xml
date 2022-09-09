@@ -68,11 +68,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- nacos config 配置 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 			<version>${spring.cloud.alibaba.version}</version>
 		</dependency>
+
 		<!-- spring cloud -->
 		<!-- 注意版本要匹配：
 	 	Spring Cloud Alibaba Version	Spring Cloud Version		Spring Boot Version
