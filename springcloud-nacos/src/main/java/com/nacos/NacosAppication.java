@@ -12,7 +12,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-@EnableDiscoveryClient
 @SpringCloudApplication
 public class NacosAppication {
     public static void main(String[] args) {
