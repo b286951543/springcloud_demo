@@ -30,6 +30,8 @@
 
 	<modules>
 		<module>springcloud-nacos</module>
+		<module>springcloud_consumer</module>
+		<module>springcloud_producer</module>
 	</modules>
 
 	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
@@ -37,19 +39,12 @@
 	<!-- dependencyManagement中定义的只是依赖的声明，并不实现引入，因此子项目需要显式的声明需要用的依赖。 -->
 	<dependencyManagement>
 		<dependencies>
-<!--			<dependency>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-starter-parent</artifactId>-->
-<!--				<version>${spring.boot.version}</version>-->
-<!--				<type>pom</type>-->
-<!--				<scope>import</scope> &lt;!&ndash; import: 只能在dependencyManagement中使用，相当于从其他pom文件中导入依赖设置 &ndash;&gt;-->
-<!--			</dependency>-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring.cloud.version}</version>
 				<type>pom</type>
-				<scope>import</scope>
+				<scope>import</scope> <!-- import: 只能在dependencyManagement中使用，相当于从其他pom文件中导入依赖设置 -->
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba.cloud</groupId>
@@ -57,6 +52,11 @@
 				<version>${spring.cloud.alibaba.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+				<version>${spring.cloud.alibaba.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -66,13 +66,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<!-- nacos config 配置 -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-			<version>${spring.cloud.alibaba.version}</version>
 		</dependency>
 
 		<!-- spring cloud -->
@@ -97,6 +90,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 			<version>3.0.3</version>
+		</dependency>
+
+		<!-- 没有该依赖会启动失败，原因未知 -->
+		<!--  Spring cloud 中处理服务雪崩效应，都需要依赖 hystrix 组件 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
 
 		<!-- lombook -->
