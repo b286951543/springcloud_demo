@@ -1,21 +1,12 @@
 package com.nacos;
 
-import com.alibaba.nacos.api.NacosFactory;
-import com.alibaba.nacos.api.PropertyKeyConst;
-import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.config.listener.Listener;
-import com.alibaba.nacos.api.exception.NacosException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-
-import java.util.Properties;
-import java.util.concurrent.Executor;
 
 @SpringCloudApplication
-public class NacosAppication {
+public class NacosApplication {
     public static void main(String[] args) {
-        SpringApplication.run(NacosAppication.class, args);
+        SpringApplication.run(NacosApplication.class, args);
     }
 
 //    public static void main(String[] args) throws NacosException {
