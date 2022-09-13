@@ -43,10 +43,10 @@ spring:
 #          refresh: true
 
         shared-configs: # 用于共享的配置文件
-        - data-id: shared01.yaml
+        - data-id: shared01.yaml # 使用的是 30e9cb88-4054-4714-8dbc-d71c8e960e82 命名空间下的 shared01.yaml h_1
           group: h_1
           refresh: true # 默认为false
-        - data-id: shared02.yaml
+        - data-id: shared02.yaml # 使用的是 30e9cb88-4054-4714-8dbc-d71c8e960e82 命名空间下的 shared02.yaml h_2
           group: h_2
           refresh: true
 
