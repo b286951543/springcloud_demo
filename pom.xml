@@ -29,9 +29,13 @@
 	</properties>
 
 	<modules>
+		<!-- 获取nacos里的配置 -->
 		<module>springcloud-nacos</module>
+		<!-- 服务消费者 -->
 		<module>springcloud_consumer</module>
+		<!-- 服务提供者 -->
 		<module>springcloud_producer</module>
+		<!-- 服务熔断与降级 -->
 		<module>springcloud-hystrix</module>
 	</modules>
 
