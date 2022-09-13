@@ -34,7 +34,7 @@ public class UserService {
                     @HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE"),
                     @HystrixProperty(name="execution.isolation.semaphore.maxConcurrentRequests", value="10"),
 
-                    @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="2000"), // 超时时间2s
+                    @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="2000"), // 超时时间2s，默认1s
                     @HystrixProperty(name="execution.timeout.enabled", value="true") // 默认开启超时时间
             }
 

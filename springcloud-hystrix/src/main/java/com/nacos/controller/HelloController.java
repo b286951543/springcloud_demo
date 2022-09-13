@@ -14,6 +14,7 @@ public class HelloController {
     @Autowired
     private UserService userService;
 
+    // http://127.0.0.1:10003/hello/hello/user/hyx
     /**
      * 服务容错测试
      * @return

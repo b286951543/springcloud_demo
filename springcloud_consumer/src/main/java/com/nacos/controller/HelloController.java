@@ -67,7 +67,7 @@ public class HelloController {
     }
 
     // http://127.0.0.1:10002/hello/hello3/user/1234
-    @RequestMapping("/hello3/user/{id:\\d+}")
+    @RequestMapping("/hello3/user/{id:\\d+}") // 只能接受数据类型的参数
     @ResponseBody
     public User hello3(@PathVariable String id) {
         Map<String, Object> params = new HashMap<>();
@@ -87,5 +87,16 @@ public class HelloController {
         // post 请求，主要有三种 postForObject  postForEntity  postForLocation
         String str = restTemplate.postForObject("http://app-provider/hello11/app/post", map, String.class);
         return str;
+    }
+
+    // http://127.0.0.1:10002/hello/hello12/user/1234
+    @RequestMapping("/hello12/user/{id:\\d+}")
+    @ResponseBody
+    public User hello12(@PathVariable String id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("username", "java rest api --" + id);
+        // post 请求，主要有三种 postForObject  postForEntity  postForLocation
+        User u = restTemplate.postForObject("http://app-provider/hello11/app/post", map, User.class);
+        return u;
     }
 }
