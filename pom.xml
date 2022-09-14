@@ -9,74 +9,21 @@
 	<name>springcloud_demo</name>
 	<description>Demo project for Spring Boot</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.12.RELEASE</version>
-		<!-- 指定查找该项目 spring-boot-starter-parent 的 pom.xml 文件的(相对)路径。默认顺序：relativePath > 本地仓库 > 远程仓库
-		没有relativePath标签等同 <relativePath>../pom.xml</relativePath>
-		<relativePath/> 意思是设定一个空值，表示将始终从仓库中获取，不从本地路径获取
-		-->
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+	<!-- parent 可用于管理多个项目之间的共同依赖，同时也会引入 parent 里的依赖-->
+<!--	<parent>-->
+<!--		<groupId>org.springframework.boot</groupId>-->
+<!--		<artifactId>spring-boot-starter-parent</artifactId>-->
+<!--		<version>2.3.12.RELEASE</version>-->
+<!--		&lt;!&ndash; 指定查找该项目 spring-boot-starter-parent 的 pom.xml 文件的(相对)路径。默认顺序：relativePath > 本地仓库 > 远程仓库-->
+<!--		没有relativePath标签等同 <relativePath>../pom.xml</relativePath>-->
+<!--		<relativePath/> 意思是设定一个空值，表示将始终从仓库中获取，不从本地路径获取-->
+<!--		&ndash;&gt;-->
+<!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--	</parent>-->
 
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
-		<spring.boot.version>2.3.12.RELEASE</spring.boot.version>
-		<spring.cloud.version>Hoxton.SR12</spring.cloud.version>
-		<spring.cloud.alibaba.version>2.2.7.RELEASE</spring.cloud.alibaba.version> <!-- 搭配 nacos 2.0.3 -->
-	</properties>
-
-	<modules>
-		<!-- 获取nacos里的配置 -->
-		<module>springcloud-nacos</module>
-		<!-- 服务消费者 -->
-		<module>springcloud_consumer</module>
-		<!-- 服务提供者 -->
-		<module>springcloud_producer</module>
-		<!-- 服务熔断与降级 -->
-		<module>springcloud-hystrix</module>
-		<!-- 服务调用与负载均衡 -->
-		<module>springcloud-ribbon</module>
-		<module>springcloud-openfeign</module>
-	</modules>
-
-	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
-	<!-- 如果有多个子项目都引用同一样依赖，则可以避免在每个使用的子项目里都声明一个版本号。当想升级或切换到另一个版本时，只需要在顶层父容器里更新，而不需要逐个修改子项目；另外如果某个子项目需要另外的一个版本，只需要声明version即可 -->
-	<!-- dependencyManagement中定义的只是依赖的声明，并不实现引入，因此子项目需要显式的声明需要用的依赖。 -->
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring.cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope> <!-- import: 只能在dependencyManagement中使用，相当于从其他pom文件中导入依赖设置 -->
-			</dependency>
-			<dependency>
-				<groupId>com.alibaba.cloud</groupId>
-				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
-				<version>${spring.cloud.alibaba.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.alibaba.cloud</groupId>
-				<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-				<version>${spring.cloud.alibaba.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<dependencies>
-		<!-- web -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<!-- spring cloud -->
 		<!-- 注意版本要匹配：
 	 	Spring Cloud Alibaba Version	Spring Cloud Version		Spring Boot Version
 		2.2.8.RELEASE 					Spring Cloud Hoxton.SR12	2.3.12.RELEASE
@@ -94,10 +41,68 @@
 		https://start.spring.io/actuator/info
 		https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
 		 -->
+		<spring.boot.version>2.3.12.RELEASE</spring.boot.version>
+		<spring.cloud.version>Hoxton.SR12</spring.cloud.version>
+		<spring.cloud.alibaba.version>2.2.7.RELEASE</spring.cloud.alibaba.version> <!-- 搭配 nacos 2.0.3 -->
+	</properties>
+
+	<modules>
+		<!-- 获取nacos里的配置 -->
+		<module>springcloud-nacos</module>
+		<!-- 服务消费者 -->
+		<module>springcloud_consumer</module>
+		<!-- 服务提供者 -->
+		<module>springcloud_producer</module>
+		<!-- 服务熔断与降级 -->
+		<module>springcloud-hystrix</module>
+		<!-- 服务调用与负载均衡 -->
+		<module>springcloud-ribbon</module>
+		<!-- 服务间的调用 -->
+		<module>springcloud-openfeign</module>
+		<!-- Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性 -->
+		<module>springcloud-sentinel</module>
+	</modules>
+
+	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
+	<!-- 如果有多个子项目都引用同一样依赖，则可以避免在每个使用的子项目里都声明一个版本号。当想升级或切换到另一个版本时，只需要在顶层父容器里更新，而不需要逐个修改子项目；另外如果某个子项目需要另外的一个版本，只需要声明version即可 -->
+	<!-- dependencyManagement中定义的只是依赖的声明，并不实现引入，因此子项目需要显式的声明需要用的依赖。 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-parent</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope> <!-- import: 只能在dependencyManagement中使用，相当于从其他pom文件中导入依赖设置 -->
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring.cloud.alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- spring cloud -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
-			<version>3.0.3</version>
 		</dependency>
 
 		<!-- 没有该依赖会启动失败，原因未知 -->
@@ -111,7 +116,9 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.22</version>
+			<!-- optional 避免依赖传递，如果 A 项目引用了 lombok，那么没影响。如果 C 项目又引用了 A，那么该 lombok 不会被引用过去
+			设置为 true 时，如果 C 使用 dubbo 调用，可能会有一些未知的问题-->
+<!--			<optional>true</optional>-->
 		</dependency>
 	</dependencies>
 
@@ -120,7 +127,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring.boot.version}</version>
 			</plugin>
 		</plugins>
 	</build>

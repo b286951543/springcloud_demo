@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: app-sentinel
+  cloud:
+    nacos:
+      discovery: # 把本项目注册到下面的配置下
+        server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868 # Nacos 服务注册中心地址
+        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+        group: g_nacos_01
+    sentinel:
+      transport:
+        dashboard: localhost:8080 # 指定 Sentinel 控制台的地址
+        port: 8719 # 它是客户端和控制台通信的端口，如果被占用了，就会从8719往后扫描直到未占用的端口
+      eager: true # 禁止控制台懒加载
