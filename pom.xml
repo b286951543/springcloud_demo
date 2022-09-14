@@ -37,7 +37,9 @@
 		<module>springcloud_producer</module>
 		<!-- 服务熔断与降级 -->
 		<module>springcloud-hystrix</module>
+		<!-- 服务调用与负载均衡 -->
 		<module>springcloud-ribbon</module>
+		<module>springcloud-openfeign</module>
 	</modules>
 
 	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->

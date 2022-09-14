@@ -38,4 +38,11 @@ public class HelloController {
         u.setUsername("hello11 ");
         return u;
     }
+
+    @PostMapping("/openfeign/provider/order2")
+    public User getUser(@RequestBody User user){
+        System.out.println("hello openfeign");
+        user.setUsername("helloOpenFeign");
+        return user;
+    }
 }

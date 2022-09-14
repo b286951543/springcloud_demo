@@ -1,0 +1,25 @@
+server:
+  port: 10002
+
+spring:
+  application:
+    name: app-openfeign
+  cloud:
+    # nacos
+    nacos:
+      discovery: # 把本项目注册到下面的配置下
+        server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868 # Nacos 服务注册中心地址
+        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+        group: g_nacos_01
+
+    feign:
+      client:
+        config:
+          # default 设置的全局超时时间
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+          # provider 服务的超时时间
+          provider:
+            connectTimeout: 30000
+            readTimeout: 30000
