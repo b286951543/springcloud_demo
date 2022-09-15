@@ -5,5 +5,3 @@
 # 访问地址：http://localhost:8080/
 java -jar sentinel-dashboard-1.8.1.jar
 ```
-
-该 springcloud-sentinel 项目重启后，配置的规则会消失，因为没有配置持久化

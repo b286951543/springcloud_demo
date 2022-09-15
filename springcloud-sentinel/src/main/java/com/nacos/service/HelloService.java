@@ -11,8 +11,8 @@ public class HelloService {
     @SentinelResource(value= "HelloService.hello()", fallback = "helloCallback", blockHandler = "helloCallback1")
     public String hello() {
         System.out.println("报错了===============");
-        String str = null;
-        str.length(); // 这里报错了，会自动执行 helloCallback 方法
+//        String str = null;
+//        str.length(); // 这里报错后，会自动执行 helloCallback 方法
         return "hello";
     }
 

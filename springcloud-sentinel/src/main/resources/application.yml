@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080 # 指定 Sentinel 控制台的地址
+        port: 8719 # 它是客户端和控制台通信的端口，如果被占用了，就会从8719往后扫描直到未占用的端口
+      eager: true # 禁止控制台懒加载
+      datasource: # sentinel 的规则持久化，相关参数参考：com.alibaba.cloud.sentinel.datasource.config.NacosDataSourceProperties
+        ds1: # 把 sentinel 的流控规则放到 spring.cloud.sentinel.datasource.ds1 里面，ds1 可以随意起名字，比如 ds0,ds1
+          nacos:
+            namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+            username: nacos
+            password: 654321
+            server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868
+            data-id: sentinel
+            group-id: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow # 规则类型，flow=流量控制,degrade=熔断降级,system=系统规则,authority=授权规则,param-flow=热点规则。取值参考：org.springframework.cloud.alibaba.sentinel.datasource.RuleType
+            # 还需要到 nacos 对应的命名空间下添加 json 配置
+            # [
+            #    {
+            #        "app":"app-sentinel",// 服务名称
+            #        "resource": "/hello", //资源名称
+            #        "count": 1, //阀值
+            #        "grade": 1, //阀值类型,0表示线程数,1表示QPS;
+            #        "limitApp": "default", //来源应用
+            #        "strategy": 0,// 流控模式,0表示直接,1表示关联,2表示链路;
+            #        "controlBehavior": 0 //流控效果,0表示快速失败,1表示Warm Up,2表示排队等待
+            #    }
+            # ]
+            # 上面配置的寻找方式：![01301.png](https://raw.githubusercontent.com/b286951543/resources/main/img2/01301.png)
+            # 复制完后，在最外面加个大括号
+            # 该持久化只能从 nacos 里拉数据。例如在 nacos 里修改数据，sentinel 里对应的规则会修改。但是如果在 sentinel 里修改数据，则不能同步到 nacos 里！！！
+            # 参考：https://www.freesion.com/article/3282866507/
+            # https://blog.csdn.net/lilizhou2008/article/details/97075236
+      log:
+        dir: ./logs # sentinel 的日志位置

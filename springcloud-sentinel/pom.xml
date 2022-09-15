@@ -17,7 +17,7 @@
     </properties>
 
     <dependencies>
-        <!-- sentinel，包含了控制台-->
+        <!-- sentinel -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
@@ -26,6 +26,12 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!-- 用于把 sentinel 的规则持久化到 nacos 里。
+        该 springcloud-sentinel 项目重启后，配置的规则会消失，因此需要该依赖 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
     </dependencies>
 </project>
