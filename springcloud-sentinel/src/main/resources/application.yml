@@ -33,5 +33,7 @@ spring:
             # 该持久化只能从 nacos 里拉数据。例如在 nacos 里修改数据，sentinel 里对应的规则会修改。但是如果在 sentinel 里修改数据，则不能同步到 nacos 里！！！
             # 参考：https://www.freesion.com/article/3282866507/
             # https://blog.csdn.net/lilizhou2008/article/details/97075236
+            # https://cloud.tencent.com/developer/article/1670814
+            # https://mp.weixin.qq.com/s?__biz=MzA4MTk3MjI0Mw==&mid=2247488652&idx=1&sn=4913dc85a3b537adde4e9df50bf2747f&chksm=9f8d89f0a8fa00e6b10ba6a29173db5cf7305b14ef4668a91a0d31f8f71244488706f1fc7a0a&scene=21#wechat_redirect
       log:
         dir: ./logs # sentinel 的日志位置
