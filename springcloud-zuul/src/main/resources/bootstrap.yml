@@ -10,3 +10,22 @@ spring:
         server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 服务注册中心地址
         namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
         group: g_nacos_01
+
+zuul:
+  routes: # 路由配置
+    rule1: # 可以随便起
+      path: /**
+      service-id: app-provider # 调用的是对应nacos配置下的 app-provider 服务，加入注册中心后不需要url了，直接使用serviceID，访问 http://localhost:8083/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
+#      url: http://localhost:10001 # 访问 http://localhost:8083/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
+
+  prefix: /gateway # 指定前缀，http://localhost:8083/gateway/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
+#  ignored-services: app-provider # 关闭指定服务:app-provider
+
+
+#  SendResponseFilter: # 关闭某个过滤器
+#    post:
+#      disable: true
+#  sensitive-headers: Cookie,Set-Cookie,Authorization # 敏感请求头过滤 如果想关闭默认配置可以置为空
+#  add-host-header: true # 路由重定向问题
+
+
