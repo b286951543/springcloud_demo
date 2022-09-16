@@ -11,7 +11,7 @@ spring:
             namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
             username: nacos
             password: 654321
-            server-addr: 192.168.51.99:8848,192.168.51.99:8858,192.168.51.99:8868
+            server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868
             data-id: sentinel
             group-id: DEFAULT_GROUP
             data-type: json

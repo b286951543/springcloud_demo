@@ -61,6 +61,7 @@
 		<module>springcloud-openfeign</module>
 		<!-- Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性 -->
 		<module>springcloud-sentinel</module>
+		<module>springcloud-zuul</module>
 	</modules>
 
 	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
