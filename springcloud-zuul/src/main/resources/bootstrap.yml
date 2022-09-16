@@ -27,5 +27,3 @@ zuul:
 #      disable: true
 #  sensitive-headers: Cookie,Set-Cookie,Authorization # 敏感请求头过滤 如果想关闭默认配置可以置为空
 #  add-host-header: true # 路由重定向问题
-
-
