@@ -62,7 +62,9 @@
 		<module>springcloud-openfeign</module>
 		<!-- Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统自适应保护等多个维度来帮助您保障微服务的稳定性 -->
 		<module>springcloud-sentinel</module>
+		<!-- 微服务网关过滤器 -->
 		<module>springcloud-zuul</module>
+		<module>springcloud-jaeger</module>
 	</modules>
 
 	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
@@ -122,6 +124,15 @@
 			<!-- optional 避免依赖传递，如果 A 项目引用了 lombok，那么没影响。如果 C 项目又引用了 A，那么该 lombok 不会被引用过去
 			设置为 true 时，如果 C 使用 dubbo 调用，可能会有一些未知的问题-->
 <!--			<optional>true</optional>-->
+		</dependency>
+
+
+
+		<!-- 集成 jaeger -->
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+			<version>3.3.1</version>
 		</dependency>
 	</dependencies>
 

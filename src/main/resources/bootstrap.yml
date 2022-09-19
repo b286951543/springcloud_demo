@@ -1,0 +1,11 @@
+# todo 所有子项目都统一使用该配置
+# jaeger ui: localhost:16686/search
+opentracing:
+  jaeger:
+    enabled: true
+    log-spans: true
+    const-sampler:
+      decision: true
+    udp-sender:
+      host: localhost
+      port: 6831
