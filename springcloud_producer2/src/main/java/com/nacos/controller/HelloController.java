@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping("/")
 public class HelloController {
 
+    // http://localhost:10011/hello1/app/1
     @GetMapping("/hello1/app/{name}")
     public String hello1(@PathVariable String name) {
         System.out.println("hello1===== 2");

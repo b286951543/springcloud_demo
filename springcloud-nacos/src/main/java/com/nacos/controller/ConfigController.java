@@ -23,6 +23,7 @@ public class ConfigController {
     @Value("${shared02.name:1234}") // 取不到配置时，使用 1234
     private String sharedName2;
 
+    // http://localhost:8003/api/appInfo
     @GetMapping("/api/appInfo")
     public String appInfo() {
         return "appName: " + appName + "," + name1 + "," + name2 + "。 " + sharedName1 + "," + sharedName2;

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: app-provider
+    name: app-provider2
   cloud:
     # nacos
     nacos:

@@ -15,13 +15,14 @@ zuul:
   routes: # 路由配置
     rule1: # 可以随便起
       path: /**
-      service-id: app-provider # 调用的是对应nacos配置下的 app-provider 服务，加入注册中心后不需要url了，直接使用serviceID，访问 http://localhost:8083/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
+#      service-id: app-provider # 不需要配置 service-id 也能用，调用的是对应nacos配置下的 app-provider 服务，加入注册中心后不需要url了，直接使用服务id，访问 http://localhost:8083/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
 #      url: http://localhost:10001 # 访问 http://localhost:8083/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
 
   prefix: /gateway # 指定前缀，http://localhost:8083/gateway/app-provider/hello1/app/1 转发-> http://localhost:10001/hello1/app/1
 #  ignored-services: app-provider # 关闭指定服务:app-provider
 
 
+# 下面这些配置没有使用过
 #  SendResponseFilter: # 关闭某个过滤器
 #    post:
 #      disable: true

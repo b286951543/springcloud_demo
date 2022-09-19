@@ -34,7 +34,7 @@ public class PostZuulFilter extends ZuulFilter {
 
     @Override
     public int filterOrder() {
-        return 2;
+        return 3;
     }
 
     @Override
