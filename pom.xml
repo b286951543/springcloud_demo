@@ -64,6 +64,7 @@
 		<module>springcloud-sentinel</module>
 		<!-- 微服务网关过滤器 -->
 		<module>springcloud-zuul</module>
+		<!-- 链路跟踪 -->
 		<module>springcloud-jaeger</module>
 	</modules>
 
