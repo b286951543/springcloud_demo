@@ -43,8 +43,8 @@ public class RuleFileUtils {
             String ruleFilePathKey = ruleFilePathIter.next();
             String ruleFilePath  = PersistenceRuleConstant.rulesMap.get(ruleFilePathKey).toString();
             File ruleFile = new File(ruleFilePath);
-            if(ruleFile.exists()) {
-                logger.info("创建Sentinel 规则文件:{}",ruleFile);
+            if(!ruleFile.exists()) {
+                logger.info("创建 Sentinel 规则文件:{}",ruleFile);
                 ruleFile.createNewFile();
             }
         }
