@@ -4,6 +4,8 @@ spring:
   cloud:
     nacos:
       config: # 从下面的配置中获取需要的配置内容
+#        username: nacos
+#        password: 654321
         prefix: test01 # 不配置该属性时，配置列表的 data-id：app-nacos-dev.yaml，配置了后，为 test01-dev.yaml，即（项目名或前缀名） + '-' +（环境名）.yaml
         server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 作为配置中心地址
         file-extension: yaml # 指定yaml格式的配置
