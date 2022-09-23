@@ -5,11 +5,12 @@
     <parent>
         <artifactId>springcloud_demo</artifactId>
         <groupId>com.example</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>springcloud-zuul</artifactId>
+    <version>demo-${revision}</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
