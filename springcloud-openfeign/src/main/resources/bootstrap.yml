@@ -8,8 +8,10 @@ spring:
     # nacos
     nacos:
       discovery: # 把本项目注册到下面的配置下
-        server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 服务注册中心地址
-        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+#        server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 服务注册中心地址
+        server-addr: 127.0.0.1:8848 # Nacos 服务注册中心地址
+#        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+        namespace: dev
         group: g_nacos_01
 
     feign:
@@ -23,3 +25,13 @@ spring:
           provider:
             connectTimeout: 30000
             readTimeout: 30000
+
+# 令 @FeignClient 的 fallback 生效
+feign:
+  # 默认使用 hystrix 降级
+#  hystrix:
+#    enabled: true
+
+  # 使用 sentinel 降级，需要添加 sentinel 的依赖
+  sentinel:
+    enabled: true
