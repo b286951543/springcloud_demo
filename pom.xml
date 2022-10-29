@@ -68,7 +68,8 @@
 		<module>springcloud-zuul</module>
 		<!-- 链路跟踪 -->
 		<module>springcloud-jaeger</module>
-	</modules>
+        <module>springcloud-netty</module>
+    </modules>
 
 	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
 	<!-- 如果有多个子项目都引用同一样依赖，则可以避免在每个使用的子项目里都声明一个版本号。当想升级或切换到另一个版本时，只需要在顶层父容器里更新，而不需要逐个修改子项目；另外如果某个子项目需要另外的一个版本，只需要声明version即可 -->
