@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <!-- web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- 使用 openfeign 来进行服务间的调用 -->
         <!-- Feign集成了Ribbon、RestTemplate实现了负载均衡的执行Http调用，
         只不过对原有的方式（Ribbon+RestTemplate）进行了封装，开发者不必手动使用RestTemplate调服务，

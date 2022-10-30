@@ -69,6 +69,8 @@
 		<!-- 链路跟踪 -->
 		<module>springcloud-jaeger</module>
         <module>springcloud-netty</module>
+		<module>springcloud-gateway</module>
+        <module>springcloud-netty2</module>
     </modules>
 
 	<!-- 依赖约束 dependencyManagement元素中声明所依赖的jar包的版本号等信息，那么所有子项目再次引入此依赖jar包时则无需显式的列出版本号 -->
@@ -101,12 +103,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- web -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
 		<!-- 开启 Bootstrap 配置文件的支持，貌似不用也能支持 Bootstrap 配置文件-->
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.cloud</groupId>-->
@@ -133,11 +129,17 @@
 
 
 		<!-- 集成 jaeger -->
-		<dependency>
-			<groupId>io.opentracing.contrib</groupId>
-			<artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
-			<version>3.3.1</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.opentracing.contrib</groupId>-->
+<!--			<artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>-->
+<!--			<version>3.3.1</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<artifactId>opentracing-spring-tracer-configuration-starter</artifactId>-->
+<!--					<groupId>io.opentracing.contrib</groupId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>

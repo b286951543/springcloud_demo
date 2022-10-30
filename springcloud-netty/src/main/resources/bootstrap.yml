@@ -1,5 +1,10 @@
 server:
   port: 10002
+  contextPath: /v1
+
+# netty.port
+netty:
+  port: 12345
 
 spring:
   application:
@@ -7,9 +12,9 @@ spring:
   cloud:
     # nacos
     nacos:
-      discovery: # 把本项目注册到下面的配置下
-#        server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 服务注册中心地址
+      discovery:
+      #        server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 服务注册中心地址
         server-addr: 127.0.0.1:8848 # Nacos 服务注册中心地址
-#        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+  #        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
         namespace: dev
         group: g_nacos_01

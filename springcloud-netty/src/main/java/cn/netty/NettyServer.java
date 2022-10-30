@@ -1,5 +1,10 @@
 package cn.netty;
 
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.NacosServiceManager;
+import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.api.naming.NamingFactory;
+import com.alibaba.nacos.api.naming.NamingService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -33,6 +38,12 @@ public class NettyServer {
     @Autowired
     private CheckUserHandler checkUserHandler;
 
+    @Autowired
+    private NacosServiceManager nacosServiceManager;
+
+    @Autowired
+    private NacosDiscoveryProperties nacosDiscoveryProperties;
+
     @PostConstruct
     public void init() {
         nettyServer = this;
@@ -40,6 +51,25 @@ public class NettyServer {
         nettyServer.metricHandler = this.metricHandler;
         nettyServer.myWebSocketHandler = this.myWebSocketHandler;
         nettyServer.checkUserHandler = this.checkUserHandler;
+        nettyServer.nacosServiceManager = this.nacosServiceManager;
+        nettyServer.nacosDiscoveryProperties = this.nacosDiscoveryProperties;
+
+        try {
+            // 除了要注册 application 服务，还需要注册 netty 服务，否则会找不到
+            NamingService namingService = nacosServiceManager.getNamingService(nacosDiscoveryProperties.getNacosProperties());
+            namingService.registerInstance("app-netty2", "g_nacos_01", "127.0.0.1", 12345);
+        }catch (Exception e){
+
+        }
+//        try {
+//            //获取nacos服务
+//            NamingService namingService = NamingFactory.createNamingService("127.0.0.1:8848");
+//            //将服务注册到注册中心
+//            namingService.registerInstance("app-netty", "g_nacos_01", "127.0.0.1", Integer.valueOf("8848"));
+//        } catch (NacosException e) {
+//            System.out.println("注册失败");
+//        }
+//        System.out.println("成功--------");
     }
 
     public void start() throws Exception {

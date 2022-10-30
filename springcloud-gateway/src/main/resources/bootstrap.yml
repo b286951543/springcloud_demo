@@ -1,0 +1,45 @@
+server: # 测试的时候，本地端口最好不要用80，容易出错
+  port: 9999
+
+spring:
+  application:
+    name: app-gateway
+  cloud:
+    nacos:
+      discovery:    # 开启以服务id去注册中心上获取转发地址
+#        enabled: true    #注册发现使用nginx地址
+        #        server-addr: 192.168.51.169:8848,192.168.51.169:8858,192.168.51.169:8868 # Nacos 服务注册中心地址
+        server-addr: 127.0.0.1:8848 # Nacos 服务注册中心地址
+        #        namespace: 30e9cb88-4054-4714-8dbc-d71c8e960e82
+        namespace: dev
+        group: g_nacos_01
+    gateway:
+      filter:
+#        remove-non-proxy-headers:
+#          headers:
+#            - Proxy-Authenticate
+#            - Proxy-Authorization
+#            - Keep-Alive
+#            - TE
+#            - Trailer
+#            - Transfer-Encoding
+      routes:   # 静态转发路由策略
+        - id: orderss # 路由标示，必须唯一
+          uri: http://www.baidu.com/    # 路由的目标地址
+          predicates: # 路由断言，判断请求是否符合规则
+            - Path=/baidu/**   # 路径断言，判断路径是否是以/baidu开头，如果是则符合
+
+        - id: provider1    # 基于lb负载均衡形式转发
+          uri: lb://app-provider # app-provider 为注册中心的服务名称
+          filters:    # 转发请求时去掉1级前缀，eg：http://localhost:9999/provider1/test?token=111中间的 provider1 字段会被清掉
+            # http://localhost:9999/provider1/hello1/app/1 变成 http://app-provider/hello1/app/1
+            - StripPrefix=1    # 匹配规则
+          predicates:
+            - Path=/provider1/**
+
+        - id: netty1
+          uri: lb:ws://app-netty2 # lb:ws: 表示要转发websocket协议
+          filters: # ws://localhost:9999/ws/v1/trainingSocket 变成 ws://app-netty/v1/trainingSocket
+            - StripPrefix=1 # 过滤掉/ws的路径
+          predicates:
+            - Path=/ws2/** # 表示请求 path 是 ip:port/ws/** 请求，会转发到 id 为 app-netty 的服务
