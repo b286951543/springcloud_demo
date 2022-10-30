@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * ChannelDuplexHandler 用于接收、下发数据
+ * 既要处理入站事件又要处理出站事件，则可继承 ChannelDuplexHandler
+ */
 @Component
 @ChannelHandler.Sharable
 public class MetricHandler extends ChannelDuplexHandler {
-
 
     private AtomicLong totalConnectionNumber = new AtomicLong();
 

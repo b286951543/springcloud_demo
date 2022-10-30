@@ -2,10 +2,6 @@ server:
   port: 10002
   contextPath: /v1
 
-# netty.port
-netty:
-  port: 12345
-
 spring:
   application:
     name: app-netty

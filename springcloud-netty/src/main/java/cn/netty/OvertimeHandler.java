@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * IdleStateHandler 是心跳处理器
+ */
 @Component
 @ChannelHandler.Sharable
 public class OvertimeHandler extends IdleStateHandler {

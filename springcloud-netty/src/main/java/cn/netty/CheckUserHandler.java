@@ -31,6 +31,7 @@ public class CheckUserHandler extends SimpleChannelInboundHandler<TextWebSocketF
         } else if (msg instanceof CloseWebSocketFrame) {
 //            System.out.println("close");
         }
+        // 传递消息至下一个处理器
         ctx.fireChannelRead(msg);
     }
 
