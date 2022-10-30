@@ -86,6 +86,54 @@ public class NettyServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
+                            // websocket协议本身是基于http协议的，所以这边也要使用http解编码器
+                            // Http协议数据编解码
+                            pipeline.addLast(new HttpServerCodec());
+                            // 以块的方式来写的处理器
+                            pipeline.addLast(new ChunkedWriteHandler());
+                            // Http协议数据片段聚合
+                            pipeline.addLast(new HttpObjectAggregator(8192));
+                            pipeline.addLast(new OvertimeHandler());
+                            pipeline.addLast(nettyServer.checkUserHandler);
+                            pipeline.addLast(new WebSocketServerProtocolHandler("/v1/trainingSocket", null, true, 65536 * 10));
+                            pipeline.addLast(nettyServer.metricHandler);
+                            // handler一般都是放在最后面,建议一个就可以,如果业务复杂拆分多个,那在handler中调用fireXXX才会向下一个handler继续调用
+                            pipeline.addLast(eventExecutorPool, nettyServer.myWebSocketHandler);
+                        }
+                    });
+            // 绑定端口
+            ChannelFuture cf = sb.bind(nettyServer.port).sync(); // 服务器异步创建绑定
+            System.out.println(NettyServer.class + " 启动正在监听： " + cf.channel().localAddress());
+
+            // 等待服务端监听端口关闭
+            // 对通道关闭进行监听，closeFuture是异步操作，监听通道关闭
+            // 通过sync方法同步等待通道关闭处理完毕，这里会阻塞等待通道关闭完成
+            cf.channel().closeFuture().sync();
+        } finally {
+            workGroup.shutdownGracefully().sync(); // 释放线程池资源
+            bossGroup.shutdownGracefully().sync();
+        }
+    }
+
+    /**
+     * 该启动方法有误，原因未知
+     * @throws Exception
+     */
+    public void start2() throws Exception {
+        // boss线程监听端口，worker线程负责数据读写
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        EventLoopGroup workGroup = new NioEventLoopGroup();
+        UnorderedThreadPoolEventExecutor eventExecutorPool = new UnorderedThreadPoolEventExecutor(50, new DefaultThreadFactory("websocket"));
+        try {
+            ServerBootstrap sb = new ServerBootstrap(); // 辅助启动类
+            sb.group(bossGroup, workGroup) // 绑定线程池
+                    // BACKLOG用于构造服务端套接字ServerSocket对象，标识当服务器请求处理线程全满时，用于临时存放已完成三次握手的请求的队列的最大长度。如果未设置或所设置的值小于1，Java将使用默认值50。
+                    .option(ChannelOption.SO_BACKLOG, 1024) // 链接缓冲池的大小（ServerSocketChannel的设置）
+                    .channel(NioServerSocketChannel.class) // 指定使用的channel
+                    .childHandler(new ChannelInitializer<SocketChannel>() { // 绑定客户端连接时候触发操作,从上往下
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline pipeline = ch.pipeline();
 
                             // LengthFieldPrepender编码器,将发送消息的前面加上请求体的字节长度
                             // LengthFieldBasedFrameDecoder获取请求头的长度,根据长度获取请求体的信息
@@ -102,19 +150,12 @@ public class NettyServer {
                             // 0因为第一个字符就是长度
                             // 2去掉长度所占字节数,获取剩下的消息体
                             // 上面的2就是下面 LengthFieldPrepender 中的规定长度所占的字节数
-//                            pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2));
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(4*10*1024, 0, 2, 0, 2));
                             // LengthFieldPrepender是一个编码器，主要是在响应字节数据前面添加字节长度字段
-//                            pipeline.addLast(new LengthFieldPrepender(2));
+                            pipeline.addLast(new LengthFieldPrepender(2));
                             // StringDecoder要放到LengthFieldBasedFrameDecoder后面,对得到消息体的ByteBuf转码为String类型,个人认为这个比较常用
-//                            pipeline.addLast ("encode", new StringDecoder());
+                            pipeline.addLast ("encode", new StringDecoder());
 
-                            // websocket协议本身是基于http协议的，所以这边也要使用http解编码器
-                            // Http协议数据编解码
-                            pipeline.addLast(new HttpServerCodec());
-                            // 以块的方式来写的处理器
-                            pipeline.addLast(new ChunkedWriteHandler());
-                            // Http协议数据片段聚合
-                            pipeline.addLast(new HttpObjectAggregator(8192));
                             pipeline.addLast(new OvertimeHandler());
                             pipeline.addLast(nettyServer.checkUserHandler);
                             pipeline.addLast(new WebSocketServerProtocolHandler("/v1/trainingSocket", null, true, 65536 * 10));
