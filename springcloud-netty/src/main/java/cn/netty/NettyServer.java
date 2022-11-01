@@ -87,7 +87,7 @@ public class NettyServer {
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
                             // websocket协议本身是基于http协议的，所以这边也要使用http解编码器
-                            // Http协议数据编解码
+                            // Http协议数据编解码，可解决粘包，拆包，半包问题
                             pipeline.addLast(new HttpServerCodec());
                             // 以块的方式来写的处理器
                             pipeline.addLast(new ChunkedWriteHandler());
