@@ -29,17 +29,39 @@ spring:
           predicates: # 路由断言，判断请求是否符合规则
             - Path=/baidu/**   # 路径断言，判断路径是否是以/baidu开头，如果是则符合
 
-        - id: provider1    # 基于lb负载均衡形式转发
-          uri: lb://app-provider # app-provider 为注册中心的服务名称
-          filters:    # 转发请求时去掉1级前缀，eg：http://localhost:9999/provider1/test?token=111中间的 provider1 字段会被清掉
+        - id: netty1
+          uri: lb:ws://app-netty2 # lb:ws: 表示要转发websocket协议 ws://localhost:9000
+          filters: # ws://localhost:9999/ws/v1/trainingSocket 变成 ws://app-netty/v1/trainingSocket
+            - StripPrefix=1 # 过滤掉/ws2的路径
+          predicates:
+            - Path=/ws2/** # 表示请求 path 是 ip:port/ws2/** 请求，会转发到 id 为 app-netty 的服务
+
+        - id: provider2    # 基于lb负载均衡形式转发
+          uri: http://localhost:10011 # app-provider 为注册中心的服务名称
+          filters: # 转发请求时去掉1级前缀，eg：http://localhost:9999/provider1/test?token=111中间的 provider1 字段会被清掉
             # http://localhost:9999/provider1/hello1/app/1 变成 http://app-provider/hello1/app/1
-            - StripPrefix=1    # 匹配规则
+            - StripPrefix=1    # 过滤掉 provider1 路径
           predicates:
             - Path=/provider1/**
+            - Query=number,123 #带查询条件，第一个是查询参数名称，第二个是可选的值，有参数名为number且值=123,只能匹配到url里的参数
+#           - Query=number #带查询条件，有参数名为number，值无所谓
+#           - Query=number,d+
 
-        - id: netty1
-          uri: lb:ws://app-netty2 # lb:ws: 表示要转发websocket协议
-          filters: # ws://localhost:9999/ws/v1/trainingSocket 变成 ws://app-netty/v1/trainingSocket
-            - StripPrefix=1 # 过滤掉/ws的路径
+#        - id: provider3    # 基于lb负载均衡形式转发
+#          uri: http://localhost:10011 # app-provider 为注册中心的服务名称
+#          filters: # 转发请求时去掉1级前缀，eg：http://localhost:9999/provider1/test?token=111中间的 provider1 字段会被清掉
+#            # http://localhost:9999/provider1/hello1/app/1 变成 http://app-provider/hello1/app/1
+#            - StripPrefix=1    # 过滤掉 provider1 路径
+#          predicates:
+#            - Path=/provider1/**
+#            - name: MyReadBodyPredicateFactory
+#              args:
+#                params: "test,2222" 参考：https://cloud.tencent.com/developer/article/1929827
+
+        - id: provider1    # 基于lb负载均衡形式转发
+          uri: lb://app-provider # app-provider 为注册中心的服务名称
+          filters: # 转发请求时去掉1级前缀，eg：http://localhost:9999/provider1/test?token=111中间的 provider1 字段会被清掉
+            # http://localhost:9999/provider1/hello1/app/1 变成 http://app-provider/hello1/app/1
+            - StripPrefix=1    # 过滤掉 provider1 路径
           predicates:
-            - Path=/ws2/** # 表示请求 path 是 ip:port/ws/** 请求，会转发到 id 为 app-netty 的服务
+            - Path=/provider1/**
