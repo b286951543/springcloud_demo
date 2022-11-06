@@ -103,12 +103,12 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- 开启 Bootstrap 配置文件的支持，貌似不用也能支持 Bootstrap 配置文件-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-starter-bootstrap</artifactId>-->
-<!--			<version>3.0.3</version>-->
-<!--		</dependency>-->
+		<!-- 开启 Bootstrap 配置文件的支持 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 
 		<!-- 没有该依赖会启动失败，原因未知 -->
 		<!--  Spring cloud 中处理服务雪崩效应，都需要依赖 hystrix 组件 -->
